@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'task_bloc.dart';
 
-// Модели, события, состояния и BLoC остаются теми же
 // (FileSystemItem, FileTreeEvent, FileTreeState, FileTreeBloc)
 // Models
 class FileSystemItem {
@@ -175,9 +174,6 @@ class FileTreeWidget extends StatelessWidget {
                     ),
                     child: const Text('Perform Operation'),
                   ),
-
-
-
                 ),
               ],
             );
@@ -227,7 +223,7 @@ class FileTreePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('File Explorer'),
+        title: const Text('Files Explorer'),
         // Можно добавить действия в AppBar
         actions: [
           IconButton(
@@ -274,19 +270,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
 
-      home: BlocProvider(
-        create: (context) => TaskBloc(),
-        child: FileTreePage(
-          folderPath: '/storage/emulated/0/Documents/HsmProjects/',
-        ),
+      // home: BlocProvider(
+      //   create: (context) => TaskBloc(),
+      //   child: FileTreePage(
+      //     folderPath: '/storage/emulated/0/Documents/HsmProjects/',
+      //   ),
+      //),
 
 
-      // home: FileTreePage(
-      //   folderPath: '/storage/emulated/0/Documents/HsmProjects/', // Замените на ваш путь
-      // ),
-
-
+    home: FileTreePage(
+        folderPath: '/storage/emulated/0/Documents/HsmProjects/', // Замените на ваш путь
       ),
-    );
+
+
+     );
   }
 }
