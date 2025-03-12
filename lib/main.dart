@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:io';
 
+import 'task_bloc.dart';
+
 // Модели, события, состояния и BLoC остаются теми же
 // (FileSystemItem, FileTreeEvent, FileTreeState, FileTreeBloc)
 // Models
@@ -150,6 +152,8 @@ class FileTreeWidget extends StatelessWidget {
                   ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
+
+
                   child: ElevatedButton(
                     onPressed: () {
                       if (state.selectedFiles.isNotEmpty) {
@@ -171,6 +175,9 @@ class FileTreeWidget extends StatelessWidget {
                     ),
                     child: const Text('Perform Operation'),
                   ),
+
+
+
                 ),
               ],
             );
@@ -266,8 +273,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: FileTreePage(
-        folderPath: '/storage/emulated/0/Documents/HsmProjects/', // Замените на ваш путь
+
+      home: BlocProvider(
+        create: (context) => TaskBloc(),
+        child: FileTreePage(
+          folderPath: '/storage/emulated/0/Documents/HsmProjects/',
+        ),
+
+
+      // home: FileTreePage(
+      //   folderPath: '/storage/emulated/0/Documents/HsmProjects/', // Замените на ваш путь
+      // ),
+
+
       ),
     );
   }
