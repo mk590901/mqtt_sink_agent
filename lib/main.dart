@@ -10,11 +10,13 @@ import 'dart:io';
 // Models
 class FileSystemItem {
   final String name;
+  final String path;
   final bool isDirectory;
   final List<FileSystemItem> children;
   bool isChecked;
 
   FileSystemItem({
+    required this.path,
     required this.name,
     required this.isDirectory,
     this.children = const [],
@@ -101,6 +103,7 @@ class FileTreeBloc extends Bloc<FileTreeEvent, FileTreeState> {
         children.add(await _buildTree(item.path));
       } else if (item is File) {
         children.add(FileSystemItem(
+          path: item.path,
           name: item.path.split('/').last,
           isDirectory: false,
         ));
@@ -108,6 +111,7 @@ class FileTreeBloc extends Bloc<FileTreeEvent, FileTreeState> {
     }
 
     return FileSystemItem(
+      path: path,
       name: path.split('/').last,
       isDirectory: true,
       children: children,
