@@ -4,25 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:io';
 
+import 'aux_classes.dart';
+import 'client_helper.dart';
+import 'models.dart';
+
 //import 'task_bloc.dart';
 
 // (FileSystemItem, FileTreeEvent, FileTreeState, FileTreeBloc)
-// Models
-class FileSystemItem {
-  final String name;
-  final String path;
-  final bool isDirectory;
-  final List<FileSystemItem> children;
-  bool isChecked;
-
-  FileSystemItem({
-    required this.path,
-    required this.name,
-    required this.isDirectory,
-    this.children = const [],
-    this.isChecked = false,
-  });
-}
+// // Models
+// class FileSystemItem {
+//   final String name;
+//   final String path;
+//   final bool isDirectory;
+//   final List<FileSystemItem> children;
+//   bool isChecked;
+//
+//   FileSystemItem({
+//     required this.path,
+//     required this.name,
+//     required this.isDirectory,
+//     this.children = const [],
+//     this.isChecked = false,
+//   });
+// }
 
 // BLoC Events
 abstract class FileTreeEvent {}
@@ -149,23 +153,53 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     emit(TaskInProgress());
 
     // Task simulation
+
+    ClientHelper.instance()?.setFilesList(event.selectedFiles);
+
     try {
-      bool result = await _performOperation(event.selectedFiles);
-      if (result) {
+      Response response = await _performOperation(/*event.selectedFiles*/);
+      if (response.result) {
         emit(TaskSuccess());
       } else {
         emit(TaskFailure());
       }
-    } catch (e) {
+    }
+    catch (e) {
       emit(TaskFailure());
     }
+
+
+
+    // try {
+    //   bool result = await _performOperation(event.selectedFiles);
+    //   if (result) {
+    //     emit(TaskSuccess());
+    //   } else {
+    //     emit(TaskFailure());
+    //   }
+    // }
+    // catch (e) {
+    //   emit(TaskFailure());
+    // }
+
+
   }
 
   // Sample of async operation
-  Future<bool> _performOperation(List<FileSystemItem> files) async {
-    await Future.delayed(const Duration(seconds: 3)); // Simulation
-    return oracle(); //files.isNotEmpty; // true -> succeeded. false -> failed
+  // Future<bool> _performOperation(List<FileSystemItem> files) async {
+  //   await Future.delayed(const Duration(seconds: 3)); // Simulation
+  //   return oracle(); //files.isNotEmpty; // true -> succeeded. false -> failed
+  // }
+
+  Future<Response> _performOperation(/*List<FileSystemItem> files*/) async {
+
+    List<String> selectedFiles = ClientHelper.instance()?.getFilesList()?? [];
+    print('->$selectedFiles');
+
+    await Future.delayed(const Duration(seconds: 1)); // Simulation
+    return Response(result: oracle(), message: 'Response'); //files.isNotEmpty; // true -> succeeded. false -> failed
   }
+
 
   bool oracle() {
     int value = getRandomInRange(1,100);
@@ -353,6 +387,7 @@ class FileTreePage extends StatelessWidget {
 
 // Main
 void main() {
+  ClientHelper.initInstance();
   runApp(const MyApp());
 }
 
