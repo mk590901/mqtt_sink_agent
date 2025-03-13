@@ -191,7 +191,16 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   //   return oracle(); //files.isNotEmpty; // true -> succeeded. false -> failed
   // }
 
-  Future<Response> _performOperation(/*List<FileSystemItem> files*/) async {
+  // Future<Response> _performOperation(/*List<FileSystemItem> files*/) async {
+  //
+  //   List<String> selectedFiles = ClientHelper.instance()?.getFilesList()?? [];
+  //   print('->$selectedFiles');
+  //
+  //   await Future.delayed(const Duration(seconds: 1)); // Simulation
+  //   return Response(result: oracle(), message: 'Response'); //files.isNotEmpty; // true -> succeeded. false -> failed
+  // }
+
+  Future<Response> _performOperation() async {
 
     List<String> selectedFiles = ClientHelper.instance()?.getFilesList()?? [];
     print('->$selectedFiles');
@@ -199,7 +208,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     await Future.delayed(const Duration(seconds: 1)); // Simulation
     return Response(result: oracle(), message: 'Response'); //files.isNotEmpty; // true -> succeeded. false -> failed
   }
-
 
   bool oracle() {
     int value = getRandomInRange(1,100);
