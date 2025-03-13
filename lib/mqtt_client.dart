@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'dart:math';
+
+import 'client_helper.dart';
 import 'mqtt_bridge.dart';
 import 'mqtt_service.dart';
 import 'slicer/slicer.dart';
@@ -32,16 +34,20 @@ class MQTTClient {
     print('******* publish *******');
 
 //    List<String> list = getFilesList('/storage/emulated/0/Documents/HsmProjects/mqtt_cs_9.hsm/');
-    String folder = '/storage/emulated/0/Documents/HsmProjects/mqtt_cs_9.hsm/';
-    List<String> list = getAllFiles(Directory(folder));
+    //String folder = '/storage/emulated/0/Documents/HsmProjects/mqtt_cs_9.hsm/';
+    //List<String> list = getAllFiles(Directory(folder));
     //print ('$list');
 
-    mqttService.publish(subscribeTopic, getData(list/*[
-      '/storage/emulated/0/Documents/HsmProjects/mqtt_cs_9.hsm/generic_code/dart/mqtt_cs_9_helper.dart',
-      '/storage/emulated/0/Documents/HsmProjects/mqtt_cs_9.hsm/mqtt_cs_9.svg',
-      '/storage/emulated/0/Documents/HsmProjects/mqtt_cs_9.hsm/mqtt_cs_9.scene.json',
-      '/storage/emulated/0/Documents/HsmProjects/mqtt_cs_9.hsm/generic_code/toit/mqtt_cs_9_helper.toit',
-    ]*/));
+    // mqttService.publish(subscribeTopic, getData(/*list*/[
+    //   '/storage/emulated/0/Documents/HsmProjects/mqtt_cs_9.hsm/generic_code/dart/mqtt_cs_9_helper.dart',
+    //   '/storage/emulated/0/Documents/HsmProjects/mqtt_cs_9.hsm/mqtt_cs_9.svg',
+    //   '/storage/emulated/0/Documents/HsmProjects/mqtt_cs_9.hsm/mqtt_cs_9.scene.json',
+    //   '/storage/emulated/0/Documents/HsmProjects/mqtt_cs_9.hsm/generic_code/toit/mqtt_cs_9_helper.toit',
+    // ]));
+
+
+    mqttService.publish(subscribeTopic, getData(getSelectedFiles()));
+
   }
 
   void unsubscribe () {
@@ -166,5 +172,10 @@ class MQTTClient {
       print('Error reading file: $e');
       return '';
     }
+  }
+
+  List<String> getSelectedFiles() {
+    List<String>? list = ClientHelper.instance()?.getFilesList();
+    return list?? [];
   }
 }

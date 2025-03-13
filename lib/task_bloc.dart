@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mqtt_sink_agent/task.dart';
 import 'aux_classes.dart';
 import 'client_helper.dart';
 import 'models.dart';
@@ -36,23 +37,27 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> implements IReaction {
 
   Future<void> _onStartTask(StartTask event, Emitter<TaskState> emit) async {
 
+    error = false;
+
     emit(TaskInProgress());
 
     // Task simulation
 
     ClientHelper.instance()?.setFilesList(event.selectedFiles);
 
-    try {
-      Response response = await _performOperation();
-      if (response.result) {
-        emit(TaskSuccess());
-      } else {
-        emit(TaskFailure());
-      }
-    }
-    catch (e) {
-      emit(TaskFailure());
-    }
+    Task(this).execute();
+
+    // try {
+    //   Response response = await _performOperation();
+    //   if (response.result) {
+    //     emit(TaskSuccess());
+    //   } else {
+    //     emit(TaskFailure());
+    //   }
+    // }
+    // catch (e) {
+    //   emit(TaskFailure());
+    // }
 
 
   }
@@ -109,5 +114,4 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> implements IReaction {
       }
     }
   }
-
 }
