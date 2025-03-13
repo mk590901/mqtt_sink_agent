@@ -1,3 +1,7 @@
+abstract class IReaction {
+  void result(Response response);
+}
+
 class Response {
   final bool result;
   final String message;

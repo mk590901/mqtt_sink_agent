@@ -23,7 +23,10 @@ class TaskSuccess extends TaskState {}
 
 class TaskFailure extends TaskState {}
 
-class TaskBloc extends Bloc<TaskEvent, TaskState> {
+class TaskBloc extends Bloc<TaskEvent, TaskState> implements IReaction {
+
+  bool error = false;
+  String errorMessage = '';
 
   final Random random = Random();
 
@@ -50,20 +53,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     catch (e) {
       emit(TaskFailure());
     }
-
-
-
-    // try {
-    //   bool result = await _performOperation(event.selectedFiles);
-    //   if (result) {
-    //     emit(TaskSuccess());
-    //   } else {
-    //     emit(TaskFailure());
-    //   }
-    // }
-    // catch (e) {
-    //   emit(TaskFailure());
-    // }
 
 
   }
@@ -102,6 +91,23 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       throw ArgumentError('min should be less than or equal to max');
     }
     return min + random.nextInt(max - min + 1);
+  }
+
+  @override
+  void result(Response response) {
+    if (response.message.contains('Failed')) {
+      error = true;
+      errorMessage = response.message;
+    }
+
+    if (response.message.contains('Disconnected')) {
+      if (!error) {
+        emit(TaskSuccess());
+      }
+      else {
+        emit(TaskFailure());
+      }
+    }
   }
 
 }
