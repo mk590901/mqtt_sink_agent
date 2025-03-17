@@ -106,7 +106,6 @@ class MqttService {
       builder.addString(messages[i]);
       try {
         _client.publishMessage(topic, MqttQos.atMostOnce, builder.payload!);
-        //_cb.call('Publish', true, 'Publish', true);
       }
       catch (exception) {
         _cb.call('Publish', false, 'Publish', true);
@@ -114,21 +113,6 @@ class MqttService {
     }
     _cb.call('Publish', true, 'Publish', true);
   }
-
-  // void publish(String topic, String message) {
-  //   if (unittest) {
-  //     return;
-  //   }
-  //   final builder = MqttClientPayloadBuilder();
-  //   builder.addString(message);
-  //   try {
-  //     _client.publishMessage(topic, MqttQos.atMostOnce, builder.payload!);
-  //     _cb.call('Publish', true, 'Publish', true);
-  //   }
-  //   catch (exception) {
-  //     _cb.call('Publish', false, 'Publish', true);
-  //   }
-  // }
 
   void onMessageReceived(String topic, MqttPublishMessage message) {
     final String payload = MqttPublishPayload.bytesToStringAsString(message.payload.message);

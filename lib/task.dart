@@ -9,8 +9,6 @@ class Task {
   final IReaction reaction;
   late  MQTTBridge mqttBridge;
 
-  //final Random random = Random();
-
   void response(bool rc, String text, bool next) {
     print ('response $rc, $text, $next');
   }
@@ -27,13 +25,11 @@ class Task {
   void execute() {
     bool rc = false;
     String message = 'result';
-
     connect((bool rc_, String parameter_) {
       rc = rc_;
       message = parameter_;
       print('******* execute $rc, $message');
       reaction.result(Response(result: rc, message: message));
     });
-    //return Future.value();;
   }
 }
