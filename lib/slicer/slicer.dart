@@ -50,15 +50,6 @@ class Slicer {
         }
       }
     }
-
-    // for (String payload in messages) {
-    //   String? restoredMessage = addChunk(payload);
-    //   if (restoredMessage != null) {
-    //     print('Message restored: $restoredMessage');
-    //     result = restoredMessage;
-    //   }
-    // }
-
     return result;
   }
 
