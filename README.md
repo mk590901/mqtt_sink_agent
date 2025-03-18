@@ -23,11 +23,15 @@ The files that I want to send are in the public Documents folder. Accordingly, t
 
 ## Movie I. Demo Client on a mobile device
 
+https://github.com/user-attachments/assets/8f5f1fc1-1ab3-47a4-80e9-998a6eedac47
 
 ## Movie II. Client on a desktop
 
+[mqtt_node.webm](https://github.com/user-attachments/assets/e44a8ec1-bbd1-46c0-a12e-f9c455127566)
 
 ## Movie III. Client page in the editor.
+
+https://github.com/user-attachments/assets/27740ba4-7d2c-48bd-bf7f-dc91084b8185
 
 ## Appendix. Access to public folders
 
