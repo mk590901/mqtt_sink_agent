@@ -1,10 +1,10 @@
-# mqtt_sink_agent
+# MQTT Sink Agent
 
-A new Flutter project.
+The repository contains application on flutter, demonstrates the capabilities of the previously implemented MQTT client ((https://github.com/mk590901/MQTT-Client-Dart-Flutter repository)) for sending files to the other client via cloud MQTT broker.
 
-## Getting Started
+## Introduction
 
-This project is a starting point for a Flutter application.
+The application extends the capabilities of the prototype (https://github.com/mk590901/MQTT-Agent-Dart-Flutter), allowing you to send a file or a group of files to a desktop or mobile device, having previously split them into pieces. This allows you to bypass the fundamental limitation of MQTT on the size of the data packet being sent.
 
 ## Notes
 
